@@ -5,6 +5,8 @@
 
 !src
 !src/**
+!WebContent
+!WebContect/**
 
 !.gitignore
 !*.txt
