@@ -1,0 +1,12 @@
+#ignore everything
+*
+
+#then don't ignore these files
+
+!src
+!src/**
+
+!.gitignore
+!*.txt
+
+#git rm -r --cached .
