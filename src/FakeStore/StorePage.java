@@ -1,4 +1,4 @@
-package store;
+package FakeStore;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,17 +17,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import FakeStore.inventoryEntry;
 
-@WebServlet("/store/ManagerPage")
-public class ManagerPage extends HttpServlet {
+
+@WebServlet("/Store/StorePage")
+public class StorePage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
-    public ManagerPage() {
-        super();
-    }
 
-    public void init( ServletConfig config ) throws ServletException
+
+	public StorePage() {
+		super();
+
+	}
+
+
+	public void init( ServletConfig config ) throws ServletException
 	{
 		super.init( config );
 
@@ -46,8 +50,7 @@ public class ManagerPage extends HttpServlet {
 			HttpServletResponse response ) throws ServletException, IOException
 	{
 		List<inventoryEntry> inventory = new ArrayList<inventoryEntry>();
-
-		
+	
 		Connection c = null;
 		try
 		{
@@ -56,17 +59,19 @@ public class ManagerPage extends HttpServlet {
 			String password = "812!xL1B";
 
 			c = DriverManager.getConnection( url, username, password );
-			Statement stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery( "select * from inventory" );
+			Statement stmt1 = c.createStatement();
+			ResultSet rs1 = stmt1.executeQuery( "select * from inventory" );
 
-			while( rs.next() )
+			while( rs1.next() )
 			{
 
-				inventoryEntry entry = new inventoryEntry( rs.getString( "name" ),rs.getString( "desciption" ), rs.getInt( "quantity" ),rs.getDouble("price"),rs.getInt("id") );
+				inventoryEntry entry = new inventoryEntry( rs1.getString( "name" ),rs1.getString( "desciption" ), rs1.getInt( "quantity" ),rs1.getDouble("price"),rs1.getInt("id") );
 
 				inventory.add( entry );
 
 			}
+			
+			
 		}
 
 		catch( SQLException e )
@@ -87,13 +92,13 @@ public class ManagerPage extends HttpServlet {
 
 
 		request.setAttribute( "inventory", inventory );
-		request.getRequestDispatcher( "/WEB-INF/ManagerPage.jsp" ).forward(request, response );
+		
+		request.getRequestDispatcher( "/WEB-INF/store.jsp" ).forward(request, response );
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+
+
 		doGet(request, response);
 	}
 

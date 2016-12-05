@@ -1,4 +1,4 @@
-package store;
+package FakeStore;
 
 
 public class inventoryEntry {

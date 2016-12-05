@@ -1,4 +1,4 @@
-package store;
+package FakeStore;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,22 +17,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Inventory.Item;
-import store.inventoryEntry;
 
-
-@WebServlet("/store/StorePage")
-public class StorePage extends HttpServlet {
+@WebServlet("/Store/ManagerPage")
+public class ManagerPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    
+    public ManagerPage() {
+        super();
+    }
 
-
-	public StorePage() {
-		super();
-
-	}
-
-
-	public void init( ServletConfig config ) throws ServletException
+    public void init( ServletConfig config ) throws ServletException
 	{
 		super.init( config );
 
@@ -51,6 +46,7 @@ public class StorePage extends HttpServlet {
 			HttpServletResponse response ) throws ServletException, IOException
 	{
 		List<inventoryEntry> inventory = new ArrayList<inventoryEntry>();
+
 		
 		Connection c = null;
 		try
@@ -91,13 +87,14 @@ public class StorePage extends HttpServlet {
 
 
 		request.setAttribute( "inventory", inventory );
-		request.getRequestDispatcher( "/WEB-INF/store.jsp" ).forward(request, response );
+		request.getRequestDispatcher( "/WEB-INF/ManagerPage.jsp" ).forward(request, response );
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+		
+		
 		doGet(request, response);
 	}
-
+	// * shoppingCart.quantity
 }

@@ -1,4 +1,4 @@
-package store;
+package FakeStore;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import FakeStore.inventoryEntry;
 import Inventory.Item;
-import store.inventoryEntry;
 
 
-@WebServlet("/store/addItem")
+@WebServlet("/Store/addItem")
 public class addItem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -45,13 +45,20 @@ public class addItem extends HttpServlet {
 		{
 			throw new ServletException( e );
 		}
+		ArrayList<Item> inventory = new ArrayList<Item>();
+		getServletContext().setAttribute("inventory", inventory);
 	}
+	
 
 	protected void doGet( HttpServletRequest request,
 			HttpServletResponse response ) throws ServletException, IOException
 	{
-		List<inventoryEntry> shoppingCart = new ArrayList<inventoryEntry>();
-		
+		// Get a reference to the application scope
+				ServletContext context = this.getServletContext();
+
+				// Get a reference to the inventory
+		List<inventoryEntry> shoppingCart = (ArrayList<inventoryEntry>) context.getAttribute("inventory");
+
 		String id = request.getParameter("id");
 		
 		Connection c = null;
@@ -62,9 +69,11 @@ public class addItem extends HttpServlet {
 			String password = "812!xL1B";
 
 			c = DriverManager.getConnection( url, username, password );
-			Statement stmt = c.createStatement();
-			String sql = "select * from inventory where id=2";
-			ResultSet rs = stmt.executeQuery(sql);
+			String sql = "select * from inventory where id=?";
+			
+			PreparedStatement pstmt = c.prepareStatement( sql );
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
 
 			while( rs.next() )
 			{
@@ -72,7 +81,13 @@ public class addItem extends HttpServlet {
 					inventoryEntry entry = new inventoryEntry( rs.getString( "name" ),rs.getString( "desciption" ), rs.getInt( "quantity" ),rs.getDouble("price"),rs.getInt("id") );
 									
 					shoppingCart.add( entry );
-				
+					String sqll = "insert into Checkout (name, desciption,quantity,price ) values (?, ?,'1',?)";
+					PreparedStatement pstmt2 = c.prepareStatement( sqll );
+					pstmt2.setString( 1, entry.getName() );
+					pstmt2.setString( 2, entry.getDescription() );
+					//pstmt2.setString( 3, quantity );
+					pstmt2.setString( 3, entry.getPrice()+"" );
+					pstmt2.executeUpdate();
 			}
 		}
 
@@ -94,7 +109,7 @@ public class addItem extends HttpServlet {
 
 		
 		request.setAttribute( "shoppingCart", shoppingCart );
-		request.getRequestDispatcher( "/WEB-INF/store.jsp" ).forward(request, response );
+		request.getRequestDispatcher( "StorePage" ).forward(request, response );
 	}
 
 	

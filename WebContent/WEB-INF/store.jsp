@@ -47,8 +47,8 @@
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>Price</th>
 				<th>Description</th>
+				<th>Price</th>
 				<th>Option</th>
 			</tr>
 		</thead>
@@ -64,8 +64,12 @@
 					<td>
 							${inventory.price}					
 					</td>
+					<c:url value="addItem" var="updateUrl">
+						   <c:param name="id" value="${inventory.id}"/>
+						   
+						</c:url>
 					<td>
-							<a href="addItem?id=${inventory.id})">Add Item</a>				
+							<a href=${updateUrl}>Add Item</a>				
 					</td>
 			
 					
@@ -108,7 +112,13 @@
 					
 				</tr>
 			</c:forEach>
-			
+			<c:url value="Checkout" var="updateUrl">
+						   <c:param name="shoppingCart" value="shoppingCart"/>
+						   
+						</c:url>
+					<td>
+							<a href=${updateUrl}>Checkout Items</a>				
+					</td>
 		</tbody>
 	</table>
 	</c:if>

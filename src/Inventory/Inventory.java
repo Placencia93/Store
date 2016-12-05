@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Inventory
  */
-@WebServlet(urlPatterns={"/Store/Inventory"},loadOnStartup = 1)
+@WebServlet(urlPatterns={"/store/Inventory"},loadOnStartup = 1)
 public class Inventory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

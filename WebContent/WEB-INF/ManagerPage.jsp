@@ -21,20 +21,33 @@
 			<h2>Inventory to Store Manager Page</h2>
 		</div>
 
-		<form action="search" method="post">
+		<form action="AddItemToStore" method="post">
 			<div class="row">
 				<div class="col-xs-9 col-sm-10">
 					<div class="form-group">
-						<label class="sr-only" for="search">Search</label> <input
-							type="text" class="form-control" id="search" name="search"
-							placeholder="search for item">
+						<label class="sr-only" for="addItem">addItem</label> <input
+							type="text" class="form-control" id="name" name="name"
+							placeholder="Enter Name Of Item">
 					</div>
-					<c:if test="${not empty error}">
-						<p class="well-sm bg-danger">${error}</p>
-					</c:if>
+					<div class="form-group">
+						<label class="sr-only" for="addItem">addDescription</label> <input
+							type="text" class="form-control" id="description" name="description"
+							placeholder="Enter description Of Item">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="addItem">addPrice</label> <input
+							type="text" class="form-control" id="price" name="price"
+							placeholder="Enter Price Of Item">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="addQuantity">addPrice</label> <input
+							type="text" class="form-control" id="quantity" name="quantity"
+							placeholder="Enter Quantity Of Item">
+					</div>
+					
 				</div>
 				<div class="col-xs-3 col-sm-2">
-					<button type="submit" class="btn btn-success btn-block">Search</button>
+					<button type="submit" class="btn btn-success btn-block">Add Item</button>
 				</div>
 			</div>
 		</form>
@@ -52,8 +65,8 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Price</th>
 						<th>Description</th>
+						<th>Price</th>
 						<th>Quantity</th>
 					</tr>
 				</thead>
@@ -69,11 +82,9 @@
 						</tr>
 					</c:forEach>
 
+					
 					<tr>
-						<a class="btn btn-primary btn-xs" href="AddItemToStore">Add item to store</a>
-					</tr>
-					<tr>
-						<a class="btn btn-primary btn-xs" href="checkPaidOrders">Check Paid Orders</a>
+						<a class="btn btn-primary btn-xs" href="History">Check Paid Orders</a>
 					</tr>
 
 				</tbody>
